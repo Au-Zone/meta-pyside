@@ -3,12 +3,12 @@ bindings for C++ libraries using CPython source code."
 
 HOMEPAGE = "http://www.pyside.org"
 
-DEPENDS = "apiextractor-native generatorrunner-native python-native"
+DEPENDS = "libxslt-native apiextractor-native generatorrunner-native python-native"
 PR = "r0"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=34337af480a8c452bfafe22a78fa20cb"
 
-SRC_URI = "git://gitorious.org/pyside/shiboken.git;protocol=git;tag=eb293c2839cfbc726f0e085e1435c94b6f6561f9 \
+SRC_URI = "git://gitorious.org/pyside/shiboken.git;protocol=git;tag=a527dd51e69b80c2d5be3a1d8cd60ab2b2616fa5 \
 			  file://MacroPushRequiredVars.cmake \
 			  file://FindQt4.cmake \
 			  file://rename-shiboken-pkg.patch \
@@ -21,21 +21,21 @@ SRC_URI[md5sum] = "946e8988e5f4c4bd62e774407fa80fee"
 SRC_URI[sha256sum] = "82c6c24dc55458ed047eba9fe700894a3347cd53462b21a97b7b5f9180b2a896"
 #OECMAKE_AR = "`echo ${AR} | sed 's/^\([^ ]*\).*/\1/'`"
 QT_LIBINFIX = "E"
-QT_DIR_NAME = "qtopia"
+QT_DIR_NAME ?= "qt4"
 
 OE_CMAKE_AR = "${STAGING_BINDIR_TOOLCHAIN}/${AR}"
-EXTRA_OECMAKE += " -DPYTHON_EXECUTABLE=${STAGING_BINDIR_NATIVE}/python-native/python2.7 \
+EXTRA_OECMAKE += " -DBUILD_TESTS=FALSE -DPYTHON_EXECUTABLE=${STAGING_BINDIR_NATIVE}/python-native/python2.7 \
 						 -DCMAKE_AR=${OE_CMAKE_AR} \
    					 -DQT_LIBINFIX=${QT_LIBINFIX} \
    					 -DQT_DIR_NAME=${QT_DIR_NAME} \
-						 -DQT_INCLUDE_DIR=${STAGING_INCDIR}/qtopia \
-						 -DQT_QTCORE_INCLUDE_DIR=${STAGING_INCDIR}/qtopia/QtCore \
+						 -DQT_INCLUDE_DIR=${STAGING_INCDIR}/${QT_DIR_NAME} \
+						 -DQT_QTCORE_INCLUDE_DIR=${STAGING_INCDIR}/${QT_DIR_NAME}/QtCore \
 						 -DQT_LIBRARY_DIR=${STAGING_LIBDIR} \
    					 -DSITE_PACKAGE=${STAGING_LIBDIR}/python2.7/site-packages \
    					 -DPYTHON_INCLUDE_DIR:PATH=${STAGING_INCDIR}/python2.7 \
    					 -DPYTHON_LIBRARIES:PATH=${STAGING_LIBDIR}/python2.7 \
                    -DQT_LIBRARY_DIR=${STAGING_INCDIR} \
-                   -DQT_HEADERS_DIR=${STAGING_INCDIR}/qtopia \
+                   -DQT_HEADERS_DIR=${STAGING_INCDIR}/${QT_DIR_NAME} \
                    -DLIBXSLT_INCLUDE_DIR=${STAGING_INCDIR}/libxslt \
                    -DLIBXSLT_LIBRARIES=${STAGING_LIBDIR}/libxslt.so \
 						 -DCMAKE_STAGING_DIR_NATIVE:PATH=${STAGING_DIR_NATIVE} \
@@ -46,7 +46,7 @@ EXTRA_OECMAKE += " -DPYTHON_EXECUTABLE=${STAGING_BINDIR_NATIVE}/python-native/py
 
 #                   -DQT_QTTEST_LIBRARY=${STAGING_LIBDIR}/libQtTestE.so \
 #                   -DQT_QTTEST_LIBRARY_RELEASE=${STAGING_LIBDIR}/libQtTestE.so \
-#                   -DQT_QTCORE_INCLUDE_DIR=${STAGING_INCDIR}/qtopia/QtCore \
+#                   -DQT_QTCORE_INCLUDE_DIR=${STAGING_INCDIR}/${QT_DIR_NAME}/QtCore \
 #						 -DQT_QTCORE_LIBRARY:STRING=${STAGING_LIBDIR}/libQtCoreE.so \
 #						 -DQT_QTGUI_LIBRARY:STRING=${STAGING_LIBDIR}/libQtGuiE.so \
 #						 -DQT_QTNETWORK_LIBRARY:STRING=${STAGING_LIBDIR}/libQtNetworkE.so \

@@ -7,6 +7,7 @@ diff -Naur pyside-qt4.7+1.0.2-orig/CMakeLists.txt pyside-qt4.7+1.0.2/CMakeLists.
                        ${CMAKE_MODULE_PATH})
 +set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/
 +                      ${CMAKE_MODULE_PATH})
++find_package(Qt4 4.7.0 COMPONENTS QtCore QtGui QtXml REQUIRED) 
  find_package(GeneratorRunner 0.6.9 REQUIRED)
  find_package(Shiboken 1.0.2 REQUIRED)
  find_package(Qt4 4.5.0 REQUIRED)

@@ -8,6 +8,7 @@ DEPENDS = "apiextractor-native generatorrunner-native shiboken-native libshiboke
 RDEPENDS_${pn} = "python-core"
 PROVIDES = "python-pyside"
 INC_PR = "r2"
+QT_DIR_NAME ?= "qt4"
 
 RDEPENDS_${PN} = " \
  python-lang \
@@ -36,16 +37,16 @@ OE_CMAKE_AR = "${STAGING_BINDIR_TOOLCHAIN}/${AR}"
 EXTRA_OECMAKE += " \
 						 -DCMAKE_AR=${OE_CMAKE_AR} \
    					 -DQT_LIBINFIX=${QT_LIBINFIX} \
-						 -DQT_MKSPECS_DIR=${STAGING_DATADIR}/qtopia/mkspecs/qws/linux-arm-gnueabi-g++/ \
-				       -DQT_INCLUDE_DIR:PATH=${STAGING_INCDIR}/qtopia/ \
-						 -DQT_HEADERS_DIR:PATH=${STAGING_INCDIR}/qtopia \
-						 -DQT_QTCORE_INCLUDE_DIR:PATH=${STAGING_INCDIR}/qtopia/QtCore \
+						 -DQT_MKSPECS_DIR=${STAGING_DATADIR}/${QT_DIR_NAME}/mkspecs/qws/linux-arm-gnueabi-g++/ \
+				       -DQT_INCLUDE_DIR:PATH=${STAGING_INCDIR}/${QT_DIR_NAME}/ \
+						 -DQT_HEADERS_DIR:PATH=${STAGING_INCDIR}/${QT_DIR_NAME} \
+						 -DQT_QTCORE_INCLUDE_DIR:PATH=${STAGING_INCDIR}/${QT_DIR_NAME}/QtCore \
 						 -DQT_QTCORE_LIBRARY:FILE=${STAGING_LIBDIR}/libQtCoreE.so \
 						 -DQT_QTCORE_LIBRARY_RELEASE:FILE=${STAGING_LIBDIR}/libQtCoreE.so \
    					 -DSITE_PACKAGE=${STAGING_LIBDIR}/python2.7/site-packages \
    					 -DPYTHON_INCLUDE_DIR:PATH=${STAGING_INCDIR}/python2.7 \
    					 -DPYTHON_LIBRARIES:PATH=${STAGING_LIBDIR}/python2.7 \
-                   -DQT_HEADERS_DIR=${STAGING_INCDIR}/qtopia \
+                   -DQT_HEADERS_DIR=${STAGING_INCDIR}/${QT_DIR_NAME} \
 						 -DSHIBOKEN_INCLUDE_DIR:PATH=${STAGING_INCDIR}/shiboken \
 						 -DCMAKE_LIBRARY_PATH=${STAGING_LIBDIR} \
 "
