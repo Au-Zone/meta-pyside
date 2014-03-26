@@ -9,7 +9,7 @@ PROVIDES = "python-pyside"
 INC_PR = "r2"
 QT_DIR_NAME ?= "qt4"
 
-SRC_URI = "git://gitorious.org/pyside/pyside.git;protocol=git;tag=6df4b307c5aec758ad954ab8717f5e85b44e2ae5 \
+SRC_URI = "git://gitorious.org/pyside/pyside.git;protocol=git;tag=d2a47ab8f27af7e74d34797464da85c128c17c37 \
            file://MacroPushRequiredVars.cmake \
            file://FindQt4.cmake \
            file://no-accessibility-support.patch \
