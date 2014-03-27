@@ -2,9 +2,10 @@ QTV = "4.7"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=15a1ca44f90f3ab457d6a4fe7c0f3a19"
 
-DEPENDS = "apiextractor-native generatorrunner-native shiboken-native shiboken"
+DEPENDS = "generatorrunner-native shiboken-native shiboken"
 RDEPENDS_${pn} = "python-core"
 PROVIDES = "python-pyside"
+RPROVIDES_${pn} = "python-pyside"
 
 INC_PR = "r2"
 QT_DIR_NAME ?= "qt4"
@@ -42,9 +43,9 @@ EXTRA_OECMAKE += " \
   -DCMAKE_LIBRARY_PATH=${STAGING_LIBDIR} \
 "
 
-#do_configure_append() {
-#	find ${S}/PySide -name cmake_install.cmake | xargs sed -i "s:${STAGING_LIBDIR}/python2.7/site-packages/PySide:${libdir}/${PYTHON_DIR}/site-packages/PySide:g"
-#}
+do_configure_append() {
+	find ${S}/PySide -name cmake_install.cmake | xargs sed -i "s:${STAGING_LIBDIR}/${PYTHON_DIR}/site-packages/PySide:${libdir}/${PYTHON_DIR}/site-packages/PySide:g"
+}
 
 FILES_${PN} =+ " \
    ${libdir}/${PYTHON_DIR}/site-packages/PySide/*.so \

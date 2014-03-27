@@ -2,6 +2,8 @@ DESCRIPTION = "Python Bindings for Qt ${QTV} X11"
 QT_LIBINFIX=""
 PR = "${INC_PR}.1"
 
+DEPENDS += "qt4-x11-free"
+
 RDEPENDS_${PN} = " \
  python-lang \
  qt4-x11-free \
