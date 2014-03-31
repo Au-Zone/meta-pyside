@@ -1,15 +1,19 @@
-QT_LIBINFIX="E"
+DESCRIPTION = "Python Bindings for Qt ${QTV} embedded (DirectFB) with QWS"
+
+QT_LIBINFIX = "E"
 
 QT_DIR_NAME = "qtopia"
-QT_LIBINFIX = "E"
+PR = "${INC_PR}.1"
 
 require python-pyside.inc
 
-DESCRIPTION = "Python Bindings for Qt ${QTV} embedded (DirectFB) with QWS"
-
 DEPENDS += "qt4-embedded"
+RCONFLICTS_${PN} += "python-pyside-x11"
+
+PKG_${PN} = "pyside-${PYTHON_DIR}-embedded"
 
 RDEPENDS_${PN} = " \
+ python-core \
  python-lang \
  qt4-embedded \
 "
