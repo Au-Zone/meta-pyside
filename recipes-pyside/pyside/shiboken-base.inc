@@ -12,7 +12,7 @@ DEPENDS = "apiextractor-native generatorrunner-native"
 SRC_URI = "git://gitorious.org/pyside/shiboken.git;protocol=git;tag=a527dd51e69b80c2d5be3a1d8cd60ab2b2616fa5"
 S = "${WORKDIR}/git"
 
-QT_DIR_NAME = "qt4"
+QT_DIR_NAME ?= "qt4"
 
 addtask do_fix_generator_names after do_patch before do_configure
 
