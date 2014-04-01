@@ -1,22 +1,60 @@
-DESCRIPTION = "Shiboken is a plugin (front-end) for Generator Runner and a runtime library. It generates \
-bindings for C++ libraries using CPython source code."
-HOMEPAGE = "http://www.pyside.org"
-INC_PR = "r1"
-LICENSE = "LGPLv2.1 | GPLv3"
-LIC_FILES_CHKSUM = "file://COPYING;md5=34337af480a8c452bfafe22a78fa20cb \
-                    file://COPYING.libsample;md5=15a1ca44f90f3ab457d6a4fe7c0f3a19 \
-                    file://COPYING.libshiboken;md5=15a1ca44f90f3ab457d6a4fe7c0f3a19"
+require shiboken-base.inc
 
-DEPENDS = "apiextractor-native generatorrunner-native"
+DEPENDS += "python libxslt apiextractor-native generatorrunner-native python-native"
+RDEPENDS_${PN} = "python-core"
+PR = "${INC_PR}.1"
 
-SRC_URI = "git://gitorious.org/pyside/shiboken.git;protocol=git;tag=a527dd51e69b80c2d5be3a1d8cd60ab2b2616fa5"
-S = "${WORKDIR}/git"
+inherit cmake pkgconfig python-dir
 
-QT_DIR_NAME = "qt4"
+SRC_URI += " \
+ file://MacroPushRequiredVars.cmake \
+ file://FindQt4.cmake \
+ file://rename-shiboken-pkg.patch \
+"
 
-addtask do_fix_generator_names after do_patch before do_configure
+SRC_URI[md5sum] = "28f4a0ab81d353f7835d82a0c5cf87d0"
+SRC_URI[sha256sum] = "a773ea87d806f16a19884a3622e1cda2cdd612279750130d8752944f29b4fd28"
 
-do_fix_generator_names() {
-    mv ${S}/generator/shiboken ${S}/generator/shiboken-src
+OE_CMAKE_AR = "${STAGING_BINDIR_TOOLCHAIN}/${AR}"
+
+EXTRA_OECMAKE += " \
+  -DPYTHON_EXECUTABLE=${STAGING_BINDIR_NATIVE}/python-native/python \
+  -DCMAKE_AR=${OE_CMAKE_AR} \
+  -DBUILD_TESTS=FALSE \
+  -DQT_LIBINFIX=${QT_LIBINFIX} \
+  -DQT_DIR_NAME=${QT_DIR_NAME} \
+  -DQT_INCLUDE_DIR=${STAGING_INCDIR}/${QT_DIR_NAME} \
+  -DQT_QTCORE_INCLUDE_DIR=${STAGING_INCDIR}/${QT_DIR_NAME}/QtCore \
+  -DQT_QTXML_INCLUDE_DIR=${STAGING_INCDIR}/${QT_DIR_NAME}/QtXml \
+  -DQT_QTGUI_INCLUDE_DIR=${STAGING_INCDIR}/${QT_DIR_NAME}/QtGui \
+  -DQT_LIBRARY_DIR=${STAGING_LIBDIR} \
+  -DQT_HEADERS_DIR=${STAGING_INCDIR}/${QT_DIR_NAME} \
+  -DQT_QMAKE_EXECUTABLE=${STAGING_BINDIR_NATIVE}/qmake2 \
+  -DCMAKE_STAGING_DIR_NATIVE:PATH=${STAGING_DIR_NATIVE} \
+  -Dshibokengenerator_BINARY_DIR=${STAGING_BINDIR_NATIVE} \
+"
+
+do_configure_prepend() {
+	cp ${WORKDIR}/MacroPushRequiredVars.cmake ${S}/cmake/Modules/MacroPushRequiredVars.cmake
+	cp ${WORKDIR}/FindQt4.cmake ${S}/cmake/Modules/FindQt4.cmake
+	
+	# Fixup generated *.cmake and *.pc files for wrong paths
+	for i in `find ${S}/data -name "*.in" -type f` ; do \
+		sed -i -e 's:@LIB_INSTALL_DIR@:${STAGING_LIBDIR}:g' \
+               -e 's:@CMAKE_INSTALL_PREFIX@/bin/@SHIBOKEN_GENERATOR@:@shibokengenerator_BINARY_DIR@/shiboken:g' \
+               -e 's:@CMAKE_INSTALL_PREFIX@:${STAGING_DIR_HOST}/usr:g' \
+    		$i
+	done
 }
 
+STAGING_LIBDIR_NATIVE = "${STAGING_DIR}/${BUILD_SYS}${prefix}/lib"
+STAGING_INCDIR_NATIVE = "${STAGING_DIR}/${BUILD_SYS}${prefix}/include"
+
+FILES_${PN}-dev += "${libdir}/cmake/ ${libdir}/pkgconfig"
+
+# The following exports are needed to let the cmake build configuration succeed without
+# errors when detecting the correct python version
+export HOST_SYS
+export BUILD_SYS
+export STAGING_LIBDIR
+export STAGING_INCDIR

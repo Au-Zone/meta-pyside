@@ -2,7 +2,7 @@ QTV = "4.7"
 LICENSE = "LGPLv2.1"
 LIC_FILES_CHKSUM = "file://COPYING;md5=15a1ca44f90f3ab457d6a4fe7c0f3a19"
 
-DEPENDS = "generatorrunner-native shiboken-native shiboken"
+DEPENDS = "generatorrunner-native shiboken-native"
 
 INC_PR = "r2"
 QT_DIR_NAME ?= "qt4"

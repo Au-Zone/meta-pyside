@@ -1,4 +1,4 @@
-require shiboken.inc
+require shiboken-base.inc
 
 DEPENDS = "apiextractor-native generatorrunner-native python-native"
 PR = "${INC_PR}.0"

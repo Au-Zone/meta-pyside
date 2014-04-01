@@ -7,7 +7,7 @@ PR = "${INC_PR}.1"
 
 require python-pyside.inc
 
-DEPENDS += "qt4-x11-free"
+DEPENDS += "qt4-x11-free shiboken-x11"
 RCONFLICTS_${PN} += "python-pyside-qws"
 
 PKG_${PN} = "pyside-${PYTHON_DIR}-x11"

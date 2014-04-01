@@ -7,7 +7,7 @@ PR = "${INC_PR}.1"
 
 require python-pyside.inc
 
-DEPENDS += "qt4-embedded"
+DEPENDS += "qt4-embedded shiboken-embedded"
 RCONFLICTS_${PN} += "python-pyside-x11"
 
 PKG_${PN} = "pyside-${PYTHON_DIR}-embedded"
