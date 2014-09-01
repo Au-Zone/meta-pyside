@@ -50,7 +50,7 @@ diff -Naur pyside-qt4.7+1.0.2-orig/CMakeLists.txt pyside-qt4.7+1.0.2/CMakeLists.
 +</typesystem>
 --- /dev/null	2012-06-06 10:06:23.975309641 -0400
 +++ git/PySide/QtGui/typesystem_gui_qws.xml	2012-10-10 13:03:56.242335434 -0400
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,24 @@
 +<?xml version="1.0"?>
 +<!--
 +    This file is part of PySide project.
@@ -72,5 +72,6 @@ diff -Naur pyside-qt4.7+1.0.2-orig/CMakeLists.txt pyside-qt4.7+1.0.2/CMakeLists.
 +    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 +-->
 +<typesystem package="PySide.QtGui">
++	<object-type name="QWSServer"/>
 +	<rejection class="QApplication" function-name="setArgs"/>
 +</typesystem>
