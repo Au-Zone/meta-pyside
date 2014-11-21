@@ -1,6 +1,6 @@
 diff -Naur pyside-qt4.7+1.0.2-orig/CMakeLists.txt pyside-qt4.7+1.0.2/CMakeLists.txt
---- pyside-qt4.7+1.0.2-orig/CMakeLists.txt	2011-04-28 22:43:01.000000000 +0200
-+++ pyside-qt4.7+1.0.2/CMakeLists.txt	2011-05-21 22:49:28.043397002 +0200
+--- git/CMakeLists.txt	2011-04-28 22:43:01.000000000 +0200
++++ git/CMakeLists.txt	2011-05-21 22:49:28.043397002 +0200
 @@ -89,6 +89,7 @@
  set(ENABLE_MAC "0")
  set(ENABLE_WIN "0")
@@ -19,6 +19,19 @@ diff -Naur pyside-qt4.7+1.0.2-orig/CMakeLists.txt pyside-qt4.7+1.0.2/CMakeLists.
  else()
      message(FATAL_ERROR "OS not supported")
  endif()
+diff --git a/PySide/global.h.in b/PySide/global.h.in
+index c85ba04..98bc117 100644
+--- /dev/null	2012-06-06 10:06:23.975309641 -0400
++++ git/PySide/global.h.in	2012-10-08 14:53:47.952118932 -0400
+@@ -343,6 +343,8 @@ QT_END_HEADER
+   #include "@QT_QTGUI_INCLUDE_DIR@/QX11EmbedWidget"
+ #elif @ENABLE_MAC@
+   #include "@QT_QTGUI_INCLUDE_DIR@/qmacstyle_mac.h"
++#elif @ENABLE_QWS@
++  #include "@QT_QTGUI_INCLUDE_DIR@/QWSServer"
+ #endif
+ #include "@QT_QTXML_INCLUDE_DIR@/QtXml"
+ #include "@QT_QTUITOOLS_INCLUDE_DIR@/QtUiTools"
 --- /dev/null	2012-06-06 10:06:23.975309641 -0400
 +++ git/PySide/QtCore/typesystem_core_qws.xml	2012-10-08 14:53:47.952118932 -0400
 @@ -0,0 +1,26 @@
@@ -50,7 +63,7 @@ diff -Naur pyside-qt4.7+1.0.2-orig/CMakeLists.txt pyside-qt4.7+1.0.2/CMakeLists.
 +</typesystem>
 --- /dev/null	2012-06-06 10:06:23.975309641 -0400
 +++ git/PySide/QtGui/typesystem_gui_qws.xml	2012-10-10 13:03:56.242335434 -0400
-@@ -0,0 +1,24 @@
+@@ -0,0 +1,30 @@
 +<?xml version="1.0"?>
 +<!--
 +    This file is part of PySide project.
@@ -72,6 +85,13 @@ diff -Naur pyside-qt4.7+1.0.2-orig/CMakeLists.txt pyside-qt4.7+1.0.2/CMakeLists.
 +    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 +-->
 +<typesystem package="PySide.QtGui">
-+	<object-type name="QWSServer"/>
-+	<rejection class="QApplication" function-name="setArgs"/>
++        <object-type name="QWSServer">
++                <enum-type name="ServerFlags"/>
++                <enum-type name="WindowEvent"/>
++                <enum-type name="IMMouse"/>
++                <object-type name="KeyboardFilter"/>
++        </object-type>
++        <object-type name="QWSClient"/>
++        <rejection class="QApplication" function-name="setArgs"/>
 +</typesystem>
+
