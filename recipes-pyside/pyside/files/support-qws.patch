@@ -63,7 +63,7 @@ index c85ba04..98bc117 100644
 +</typesystem>
 --- git/PySide/QtGui/CMakeLists.txt b/PySide/QtGui/CMakeLists.txt 2012-06-06 10:06:23.975309641 -0400
 +++ git/PySide/QtGui/CMakeLists.txt b/PySide/QtGui/CMakeLists.txt 2014-11-06 08:04:10.125504632 -0400
-@@ -13,6 +13,14 @@ if(ENABLE_X11)
+@@ -13,6 +13,15 @@ if(ENABLE_X11)
              ${CMAKE_CURRENT_BINARY_DIR}/PySide/QtGui/qabstractkineticscroller_wrapper.cpp
          )
      endif()
@@ -72,6 +72,7 @@ index c85ba04..98bc117 100644
 +    set(SPECIFIC_OS_FILES
 +        ${CMAKE_CURRENT_BINARY_DIR}/PySide/QtGui/qwsserver_wrapper.cpp
 +        ${CMAKE_CURRENT_BINARY_DIR}/PySide/QtGui/qwsclient_wrapper.cpp
++        ${CMAKE_CURRENT_BINARY_DIR}/PySide/QtGui/qwsscreensaver_wrapper.cpp
 +        ${CMAKE_CURRENT_BINARY_DIR}/PySide/QtGui/qwsserver_keyboardfilter_wrapper.cpp
 +    )
 +  endif()
@@ -80,7 +81,7 @@ index c85ba04..98bc117 100644
  if (${QT_VERSION_MAJOR} EQUAL 4 AND ${QT_VERSION_MINOR} LESS 6)
 --- /dev/null	2012-06-06 10:06:23.975309641 -0400
 +++ git/PySide/QtGui/typesystem_gui_qws.xml	2012-10-10 13:03:56.242335434 -0400
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,54 @@
 +<?xml version="1.0"?>
 +<!--
 +    This file is part of PySide project.
@@ -107,8 +108,31 @@ index c85ba04..98bc117 100644
 +                <enum-type name="WindowEvent"/>
 +                <enum-type name="IMMouse"/>
 +                <object-type name="KeyboardFilter"/>
++	<modify-function signature="setScreenSaverIntervals(int*)">
++      <modify-argument index="1">
++          <replace-type modified-type="PyObject"/>
++      </modify-argument>
++      <inject-code class="target" position="beginning">
++        int* array = NULL;
++        bool errorOccurred = false;
++
++        array = Shiboken::sequenceToIntArray(%PYARG_1, true);
++        if (PyErr_Occurred()) {
++            if (array)
++                delete []array;
++            errorOccurred = true;
++        }
++
++        if (!errorOccurred) {
++            %RETURN_TYPE retval = %CPPSELF.%FUNCTION_NAME(array);
++
++            if (array)
++                delete []array;
++        }
++      </inject-code>
++	</modify-function>
 +        </object-type>
 +        <object-type name="QWSClient"/>
++        <object-type name="QWSScreenSaver"/>
 +        <rejection class="QApplication" function-name="setArgs"/>
 +</typesystem>
-
