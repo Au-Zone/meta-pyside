@@ -124,7 +124,7 @@ index c85ba04..98bc117 100644
 +        }
 +
 +        if (!errorOccurred) {
-+            %RETURN_TYPE retval = %CPPSELF.%FUNCTION_NAME(array);
++            %CPPSELF.%FUNCTION_NAME(array);
 +
 +            if (array)
 +                delete []array;
