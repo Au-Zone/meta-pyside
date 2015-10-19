@@ -7,7 +7,7 @@ DEPENDS = "generatorrunner-native shiboken-native"
 INC_PR = "r2"
 QT_DIR_NAME ?= "qt4"
 
-SRC_URI = "git://gitorious.org/pyside/pyside.git;protocol=git;tag=d2a47ab8f27af7e74d34797464da85c128c17c37 \
+SRC_URI = "git://github.com/PySide/PySide.git;protocol=git;tag=d2a47ab8f27af7e74d34797464da85c128c17c37 \
            file://MacroPushRequiredVars.cmake \
            file://FindQt4.cmake \
            file://no-accessibility-support.patch \

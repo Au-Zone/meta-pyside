@@ -9,7 +9,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=34337af480a8c452bfafe22a78fa20cb \
 
 DEPENDS = "apiextractor-native generatorrunner-native"
 
-SRC_URI = "git://gitorious.org/pyside/shiboken.git;protocol=git;tag=a527dd51e69b80c2d5be3a1d8cd60ab2b2616fa5"
+SRC_URI = "git://github.com/PySide/Shiboken.git;protocol=git;tag=a527dd51e69b80c2d5be3a1d8cd60ab2b2616fa5"
 S = "${WORKDIR}/git"
 
 QT_DIR_NAME ?= "qt4"
