@@ -45,7 +45,7 @@ EXTRA_OECMAKE += " \
 "
 
 do_configure_append() {
-	find ${S}/PySide -name cmake_install.cmake | xargs sed -i "s:${STAGING_LIBDIR}/${PYTHON_DIR}/site-packages/PySide:${libdir}/${PYTHON_DIR}/site-packages/PySide:g"
+	find ${B}/PySide -name cmake_install.cmake | xargs sed -i "s:${STAGING_LIBDIR}/${PYTHON_DIR}/site-packages/PySide:${libdir}/${PYTHON_DIR}/site-packages/PySide:g"
 }
 
 FILES_${PN} =+ " \
