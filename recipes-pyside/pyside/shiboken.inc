@@ -58,6 +58,8 @@ STAGING_LIBDIR_NATIVE = "${STAGING_DIR}/${BUILD_SYS}${prefix}/lib"
 STAGING_INCDIR_NATIVE = "${STAGING_DIR}/${BUILD_SYS}${prefix}/include"
 
 FILES_${PN}-dev += "${libdir}/cmake/ ${libdir}/pkgconfig"
+FILES_${PN} += "${libdir}/python2.7/site-packages/shiboken.so"
+FILES_${PN}-dbg += "${libdir}/python2.7/site-packages/.debug/shiboken.so"
 
 # The following exports are needed to let the cmake build configuration succeed without
 # errors when detecting the correct python version
